@@ -1,0 +1,122 @@
+﻿using MauiApp2.Models;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace MauiApp2.Models;
+
+public static class QuestionBank
+{
+    public static List<QuizQuestion> GetAllQuestions()
+    {
+        var questions = new List<QuizQuestion>
+        {
+            // ================== أسئلة سهلة (Easy) - 34 سؤالاً ==================
+            new("ما هو النوع المناسب لتخزين قيمة صحيحة؟", new() { "int", "string", "bool", "double" }, 0, QuizDifficulty.Easy),
+            new("ما هي الكلمة المفتاحية المستخدمة لتعريف فئة (Class)؟", new() { "struct", "class", "interface", "enum" }, 1, QuizDifficulty.Easy),
+            new("أي من التالي يُستخدم لتعريف قيمة ثابتة لا تتغير؟", new() { "var", "readonly", "const", "static" }, 2, QuizDifficulty.Easy),
+            new("كيف نطبع نصاً في الشاشة في تطبيق Console؟", new() { "Console.Read()", "Console.WriteLine()", "Print()", "System.Print()" }, 1, QuizDifficulty.Easy),
+            new("ما هو الامتداد الصحيح لملف لغة C#؟", new() { ".java", ".cs", ".cpp", ".py" }, 1, QuizDifficulty.Easy),
+            new("أي من التالي يُستخدم لتعريف مجموعة ثوابت مسماة؟", new() { "enum MyEnum {}", "Enum MyEnum {}", "public enum MyEnum {}", "int MyEnum {}" }, 2, QuizDifficulty.Easy),
+            new("ما هي نتيجة 10 % 3 في C#؟", new() { "3", "1", "0", "3.33" }, 1, QuizDifficulty.Easy),
+            new("أي كلمة مفتاحية تُستخدم لوراثة فئة في C#؟", new() { "inherits", "extends", ":", "base" }, 2, QuizDifficulty.Easy),
+            new("ما هو النوع الافتراضي للأرقام الحقيقية مثل 3.14 بدون لاحقة؟", new() { "float", "double", "decimal", "int" }, 1, QuizDifficulty.Easy),
+            new("كيف نحدد تعليقاً من سطر واحد؟", new() { "/* تعليق */", "# تعليق", "// تعليق", "<!-- تعليق -->" }, 2, QuizDifficulty.Easy),
+            new("أي نوع يُستخدم لتخزين قيمة منطقية (true/false)؟", new() { "int", "bool", "char", "string" }, 1, QuizDifficulty.Easy),
+            new("ما هو النوع الذي يخزن حرفاً واحداً؟", new() { "char", "string", "byte", "text" }, 0, QuizDifficulty.Easy),
+            new("أي عامل يُستخدم للمقارنة بين قيمتين للتساوي؟", new() { "=", "==", "=>", "!=" }, 1, QuizDifficulty.Easy),
+            new("ما ناتج 7 / 2 عند قسمة عددين صحيحين من نوع int؟", new() { "3.5", "4", "3", "3.0" }, 2, QuizDifficulty.Easy),
+            new("أي حلقة تنفذ الكود مرة واحدة على الأقل؟", new() { "for", "while", "foreach", "do-while" }, 3, QuizDifficulty.Easy),
+            new("ما هي الكلمة المفتاحية لإنشاء كائن جديد؟", new() { "create", "new", "make", "object" }, 1, QuizDifficulty.Easy),
+            new("أي عامل يمثل \"و\" المنطقية (AND)؟", new() { "&&", "||", "!", "??" }, 0, QuizDifficulty.Easy),
+            new("ما هي الكلمة المفتاحية لإرجاع قيمة من دالة؟", new() { "break", "out", "exit", "return" }, 3, QuizDifficulty.Easy),
+            new("أي كلمة تُستخدم للخروج من الحلقة فوراً؟", new() { "stop", "exit", "break", "end" }, 2, QuizDifficulty.Easy),
+            new("أي من التالي اسم متغير صحيح في C#؟", new() { "1name", "my-name", "_name", "class" }, 2, QuizDifficulty.Easy),
+            new("ما الدالة المستخدمة لتحويل نص إلى عدد صحيح؟", new() { "Convert.ToText()", "string.ToInt()", "int.Parse()", "Int.Make()" }, 2, QuizDifficulty.Easy),
+            new("كيف نعرّف مصفوفة من 5 أعداد صحيحة؟", new() { "int arr = [5];", "int[] arr = new int[5];", "array<int> arr(5);", "int arr[5];" }, 1, QuizDifficulty.Easy),
+            new("ما فهرس (index) أول عنصر في المصفوفة؟", new() { "1", "-1", "0", "يحدده المبرمج" }, 2, QuizDifficulty.Easy),
+            new("ما الكلمة المفتاحية للدالة التي لا ترجع قيمة؟", new() { "null", "void", "empty", "none" }, 1, QuizDifficulty.Easy),
+            new("أي مواصفة وصول تجعل العضو متاحاً من أي مكان؟", new() { "private", "protected", "public", "internal" }, 2, QuizDifficulty.Easy),
+            new("ما ناتج \"Hello\" + \" World\"؟", new() { "HelloWorld", "Hello World", "خطأ ترجمة", "Hello+ World" }, 1, QuizDifficulty.Easy),
+            new("أي عامل يزيد قيمة المتغير بمقدار 1؟", new() { "--", "+=", "++", "**" }, 2, QuizDifficulty.Easy),
+            new("ما هي الكلمة المفتاحية المستخدمة للشرط؟", new() { "when", "if", "check", "cond" }, 1, QuizDifficulty.Easy),
+            new("أي كلمة مفتاحية تُستخدم لاستيراد مساحة أسماء (Namespace)؟", new() { "import", "include", "using", "require" }, 2, QuizDifficulty.Easy),
+            new("ما الدالة التي تقرأ سطراً نصياً من لوحة المفاتيح؟", new() { "Console.Input()", "Console.ReadLine()", "Console.Get()", "Console.Scan()" }, 1, QuizDifficulty.Easy),
+            new("هل يمكن لمتغير int عادي أن يحمل القيمة null؟", new() { "نعم دائماً", "لا، إلا إذا كان int?", "نعم في المصفوفات فقط", "لا يمكن أبداً" }, 1, QuizDifficulty.Easy),
+            new("ما الخاصية التي تعطي عدد أحرف النص (string)؟", new() { "Size", "Count", "Length", "Total" }, 2, QuizDifficulty.Easy),
+            new("أي من التالي يمثل العامل الثلاثي (Ternary)؟", new() { "a ?? b", "a => b", "a :: b", "condition ? a : b" }, 3, QuizDifficulty.Easy),
+            new("ما هي الفئة المستخدمة لتوليد أرقام عشوائية؟", new() { "Rand", "Random", "Math.Random", "Number" }, 1, QuizDifficulty.Easy),
+
+            // ================== أسئلة متوسطة (Medium) - 33 سؤالاً ==================
+            new("ما هو الفرق الرئيسي بين Array و List؟", new() { "Array ثابت الحجم، List ديناميكية", "Array أسرع، List أبطأ", "List لا تقبل التكرار", "Array لا تقبل التكرار" }, 0, QuizDifficulty.Medium),
+            new("أي من التالي يدعم الوراثة المتعددة (Multiple Inheritance) في C#؟", new() { "class", "interface", "struct", "enum" }, 1, QuizDifficulty.Medium),
+            new("ما هو مفهوم تعدد الأشكال (Polymorphism)؟", new() { "إخفاء البيانات", "قدرة الكائن على اتخاذ أشكال متعددة", "إنشاء كائنات جديدة", "وراثة الخصائص" }, 1, QuizDifficulty.Medium),
+            new("ما هي الكلمة المفتاحية التي تمنع تجاوز الدالة (Override) في الفئات المشتقة؟", new() { "virtual", "abstract", "sealed", "override" }, 2, QuizDifficulty.Medium),
+            new("ماذا يفعل المعامل 'ref'؟", new() { "يمرر القيمة فقط", "يمرر المرجع للقراءة فقط", "يمرر المرجع للقراءة والكتابة", "ينشئ نسخة جديدة" }, 2, QuizDifficulty.Medium),
+            new("ما هو استخدام الكلمة المفتاحية 'base'؟", new() { "استدعاء الفئة الأساسية", "استدعاء الفئة المشتقة", "إنشاء كائن جديد", "إنهاء البرنامج" }, 0, QuizDifficulty.Medium),
+            new("ما هي بنية البيانات التي تعمل بنظام FIFO (أول ما يدخل أول ما يخرج)؟", new() { "Stack", "Queue", "List", "Dictionary" }, 1, QuizDifficulty.Medium),
+            new("كيف نجعل متغيراً مشتركاً بين جميع كائنات الفئة؟", new() { "باستخدام const", "باستخدام static", "باستخدام readonly", "باستخدام virtual" }, 1, QuizDifficulty.Medium),
+            new("ماذا يفعل المعامل 'out'؟", new() { "يجب تهيئته قبل الإرسال", "يستخدم لإرجاع أكثر من قيمة", "يمنع التعديل", "مثل ref تماماً" }, 1, QuizDifficulty.Medium),
+            new("أي مما يلي يصف الـ Encapsulation (التغليف)؟", new() { "إخفاء التفاصيل الداخلية وإظهار الواجهة فقط", "وراثة الخصائص", "استخدام الـ Interfaces", "تعدد الأشكال" }, 0, QuizDifficulty.Medium),
+            new("ماذا تعني الكلمة abstract عند وضعها على فئة؟", new() { "لا يمكن إنشاء كائن منها مباشرة", "لا يمكن الوراثة منها", "تكون جميع أعضائها ثابتة", "تُنفّذ تلقائياً عند التشغيل" }, 0, QuizDifficulty.Medium),
+            new("أي مواصفة وصول تسمح بالوصول من الفئة نفسها والفئات المشتقة منها فقط؟", new() { "private", "protected", "internal", "public" }, 1, QuizDifficulty.Medium),
+            new("ما هو الـ Constructor (المنشئ)؟", new() { "نوع بيانات", "دالة لحذف الكائن", "خاصية للقراءة فقط", "دالة تُستدعى تلقائياً عند إنشاء الكائن" }, 3, QuizDifficulty.Medium),
+            new("ما الفرق بين Overloading و Overriding؟", new() { "هما نفس الشيء", "Overriding: نفس الاسم بمعاملات مختلفة", "Overloading: نفس الاسم بمعاملات مختلفة، وOverriding: إعادة تعريف دالة موروثة", "Overloading خاص بالـ Interfaces" }, 2, QuizDifficulty.Medium),
+            new("أي من التالي يمثل خاصية تلقائية (Auto-Property) صحيحة؟", new() { "public int Age { get; set; }", "public int Age()", "public get int Age;", "property int Age;" }, 0, QuizDifficulty.Medium),
+            new("ما هي قيمة أول عضو في enum إذا لم تُحدَّد له قيمة؟", new() { "1", "0", "-1", "null" }, 1, QuizDifficulty.Medium),
+            new("ما هو النوع الأساسي الافتراضي (Underlying Type) لـ enum؟", new() { "byte", "long", "int", "short" }, 2, QuizDifficulty.Medium),
+            new("ما هي بنية البيانات التي تعمل بنظام LIFO (آخر ما يدخل أول ما يخرج)؟", new() { "Queue", "Stack", "Dictionary", "HashSet" }, 1, QuizDifficulty.Medium),
+            new("أي مجموعة (Collection) لا تقبل العناصر المكررة؟", new() { "List", "Array", "HashSet", "Queue" }, 2, QuizDifficulty.Medium),
+            new("ماذا يخزن الـ Dictionary؟", new() { "قيماً فقط", "أزواجاً من مفتاح وقيمة", "مفاتيح فقط", "صفوفاً مرتبة" }, 1, QuizDifficulty.Medium),
+            new("أي حلقة تُستخدم للمرور على جميع عناصر قائمة دون الحاجة إلى فهرس؟", new() { "for", "foreach", "while(true)", "goto" }, 1, QuizDifficulty.Medium),
+            new("أي كتلة تُنفَّذ دائماً سواء حدث استثناء أم لا؟", new() { "catch", "try", "finally", "throw" }, 2, QuizDifficulty.Medium),
+            new("ما هي الكلمة المفتاحية لرمي استثناء؟", new() { "raise", "throw", "error", "exit" }, 1, QuizDifficulty.Medium),
+            new("أي استثناء يحدث عند القسمة على صفر لأعداد صحيحة؟", new() { "NullReferenceException", "DivideByZeroException", "IndexOutOfRangeException", "FormatException" }, 1, QuizDifficulty.Medium),
+            new("أي استثناء يحدث عند الوصول إلى فهرس خارج حدود المصفوفة؟", new() { "IndexOutOfRangeException", "ArgumentException", "InvalidCastException", "OverflowException" }, 0, QuizDifficulty.Medium),
+            new("ما الفرق بين string و StringBuilder؟", new() { "string قابل للتعديل مباشرة", "StringBuilder أنسب لتعديل النصوص بشكل متكرر", "لا يوجد فرق", "StringBuilder مخصص للأرقام" }, 1, QuizDifficulty.Medium),
+            new("ماذا تعني الكلمة المفتاحية this؟", new() { "الفئة الأساسية", "الكائن الحالي", "الفئة الثابتة", "الدالة الحالية" }, 1, QuizDifficulty.Medium),
+            new("ما هي الـ Interface (الواجهة)؟", new() { "فئة يمكن إنشاء كائن منها", "نوع قيمة (Value Type)", "عقد يحدد الأعضاء التي يجب أن تنفذها الفئة", "مجموعة من البيانات" }, 2, QuizDifficulty.Medium),
+            new("ماذا تفعل الكلمة المفتاحية virtual على دالة؟", new() { "تمنع الوراثة", "تسمح بإعادة تعريفها في الفئة المشتقة", "تجعلها ثابتة", "تخفيها عن بقية الفئات" }, 1, QuizDifficulty.Medium),
+            new("ما هو الـ Lambda Expression؟", new() { "حلقة تكرار", "نوع enum", "مساحة أسماء", "دالة مجهولة تُكتب بصيغة =>" }, 3, QuizDifficulty.Medium),
+            new("ما وظيفة الدالة Where في LINQ؟", new() { "ترتيب العناصر", "تصفية العناصر حسب شرط", "جمع العناصر", "حذف القائمة" }, 1, QuizDifficulty.Medium),
+            new("ما فائدة السمة [Flags] مع enum؟", new() { "السماح بدمج عدة قيم معاً باستخدام عمليات البت", "منع تعديل القيم", "تحويله إلى فئة", "تسريع الترجمة" }, 0, QuizDifficulty.Medium),
+            new("إذا كان enum Day { Sat, Sun, Mon } فما قيمة (int)Day.Mon؟", new() { "1", "2", "3", "0" }, 1, QuizDifficulty.Medium),
+
+            // ================== أسئلة صعبة (Hard) - 33 سؤالاً ==================
+            new("ما هو الوقت المستغرق للبحث في Dictionary (Big O)؟", new() { "O(n)", "O(log n)", "O(1)", "O(n^2)" }, 2, QuizDifficulty.Hard),
+            new("ما هو الفرق بين struct و class من حيث الذاكرة؟", new() { "struct في الـ Heap، class في الـ Stack", "struct في الـ Stack، class في الـ Heap", "كلاهما في الـ Stack", "كلاهما في الـ Heap" }, 1, QuizDifficulty.Hard),
+            new("ما هي المشكلة التي يحلها الـ Garbage Collector؟", new() { "تسريع البرنامج", "إدارة الذاكرة وتحرير الكائنات غير المستخدمة", "منع الـ Stack Overflow", "تحويل الأنواع" }, 1, QuizDifficulty.Hard),
+            new("ماذا يحدث عند استخدام Boxing؟", new() { "تحويل value type إلى reference type", "تحويل reference type إلى value type", "تحويل class إلى struct", "حذف الكائن من الذاكرة" }, 0, QuizDifficulty.Hard),
+            new("ما هو الفرق بين Abstract Class و Interface؟", new() { "لا يوجد فرق", "الـ Abstract يمكن أن تحتوي على كود منفذ، Interface لا يمكن", "Interface يمكن أن تحتوي على متغيرات، Abstract لا", "الـ Abstract أسرع" }, 1, QuizDifficulty.Hard),
+            new("أي بنية بيانات تُستخدم في خوارزمية البحث بالعمق (DFS)؟", new() { "Queue", "Stack", "List", "Tree" }, 1, QuizDifficulty.Hard),
+            new("ما هو مفهوم الـ Deferred Execution في LINQ؟", new() { "تنفيذ الكود فوراً", "تأجيل التنفيذ حتى يتم استدعاء البيانات", "تنفيذ الكود في الخلفية", "إلغاء التنفيذ" }, 1, QuizDifficulty.Hard),
+            new("ما فائدة استخدام 'yield return'؟", new() { "إرجاع القيم بشكل متزامن", "توليد البيانات بشكل تدريجي لتوفير الذاكرة", "إرجاع مصفوفة كاملة", "إيقاف الدالة" }, 1, QuizDifficulty.Hard),
+            new("ماذا يحدث إذا تم استدعاء دالة async بدون await؟", new() { "توقف البرنامج", "تعمل الدالة في الخلفية دون انتظارها", "يحدث خطأ في الترجمة", "تتحول إلى دالة متزامنة" }, 1, QuizDifficulty.Hard),
+            new("ما هو الـ Deadlock في البرمجة المتزامنة (Multithreading)؟", new() { "توقف خيطين عن العمل بسبب انتظار كل منهما للآخر", "انتهاء الذاكرة", "تسريع الخيوط", "حذف الخيوط" }, 0, QuizDifficulty.Hard),
+            new("ما الفرق بين المعاملين ref و in؟", new() { "in مثل out تماماً", "in يجبر على نسخ القيمة", "in يمرر بالمرجع للقراءة فقط", "لا يوجد فرق" }, 2, QuizDifficulty.Hard),
+            new("ما الفرق بين IEnumerable و IQueryable؟", new() { "IEnumerable أسرع دائماً", "لا يوجد فرق", "IQueryable يترجم الاستعلام إلى لغة مصدر البيانات (مثل SQL)", "IQueryable خاص بالمصفوفات فقط" }, 2, QuizDifficulty.Hard),
+            new("ما فائدة جملة using (using statement) مع الكائنات؟", new() { "استيراد مكتبة جديدة", "إنشاء مصفوفة", "تعريف ثابت", "استدعاء Dispose تلقائياً عند الانتهاء" }, 3, QuizDifficulty.Hard),
+            new("ما التعقيد الزمني المتوسط لإضافة عنصر في نهاية List<T>؟", new() { "O(n)", "O(1) مطفأ (Amortized)", "O(log n)", "O(n^2)" }, 1, QuizDifficulty.Hard),
+            new("ما التعقيد الزمني للبحث الثنائي (Binary Search) في مصفوفة مرتبة؟", new() { "O(n)", "O(1)", "O(log n)", "O(n log n)" }, 2, QuizDifficulty.Hard),
+            new("ما التعقيد الزمني لإدراج عنصر في بداية LinkedList<T>؟", new() { "O(n)", "O(log n)", "O(1)", "O(n^2)" }, 2, QuizDifficulty.Hard),
+            new("ما الفرق بين const و readonly؟", new() { "لا يوجد فرق", "readonly تُحدد وقت الترجمة فقط", "const يمكن تعيينها في المنشئ", "const تُحدد وقت الترجمة، وreadonly يمكن تعيينها في المنشئ" }, 3, QuizDifficulty.Hard),
+            new("ما هو الـ Unboxing؟", new() { "تحويل value type إلى object", "تحويل object (reference type) إلى value type", "حذف الكائن من الذاكرة", "نسخ المصفوفة" }, 1, QuizDifficulty.Hard),
+            new("ما فائدة await عند استدعاء دالة async؟", new() { "يحجب الخيط الرئيسي حتى الانتهاء", "ينتظر اكتمال المهمة دون حجب الخيط", "يحول الدالة إلى static", "يلغي الاستثناءات" }, 1, QuizDifficulty.Hard),
+            new("ماذا يعني الحرف S في مبادئ SOLID؟", new() { "Static Class Principle", "Single Responsibility Principle", "Simple Syntax Principle", "Sealed Class Principle" }, 1, QuizDifficulty.Hard),
+            new("ماذا يعني مبدأ Open/Closed؟", new() { "الفئات مفتوحة للتعديل ومغلقة للتوسعة", "الفئات مفتوحة للتوسعة ومغلقة للتعديل", "كل الأعضاء تكون public", "الفئة تفتح الملفات وتغلقها" }, 1, QuizDifficulty.Hard),
+            new("ما هو الـ Dependency Injection؟", new() { "حقن أكواد SQL في الاستعلامات", "وراثة متعددة من فئات كثيرة", "نسخ الكائنات من الذاكرة", "تمرير الاعتماديات للفئة من الخارج بدلاً من إنشائها داخلها" }, 3, QuizDifficulty.Hard),
+            new("إذا كان [Flags] enum Perm { None = 0, Read = 1, Write = 2, Exec = 4 } فما القيمة العددية لـ Read | Write؟", new() { "2", "3", "4", "1" }, 1, QuizDifficulty.Hard),
+            new("ما ناتج العملية 5 & 3 باستخدام عمليات البت؟", new() { "8", "1", "7", "2" }, 1, QuizDifficulty.Hard),
+            new("ماذا يعني القيد where T : class في الـ Generics؟", new() { "T يجب أن يكون نوع قيمة", "T يجب أن يكون نوعاً مرجعياً", "T يجب أن يكون رقمياً", "T لا يمكن الوراثة منه" }, 1, QuizDifficulty.Hard),
+            new("ما الفرق بين Shallow Copy و Deep Copy؟", new() { "Shallow ينسخ المراجع فقط، وDeep ينسخ الكائنات المتداخلة أيضاً", "Deep أسرع دائماً", "لا يوجد فرق", "Shallow خاص بالمصفوفات فقط" }, 0, QuizDifficulty.Hard),
+            new("ما الفرق بين Thread و Task؟", new() { "Thread تجريد أعلى مستوى من Task", "هما متطابقان تماماً", "Task تجريد أعلى يعتمد غالباً على ThreadPool", "Task لا تدعم await" }, 2, QuizDifficulty.Hard),
+            new("ما وظيفة الكلمة المفتاحية lock؟", new() { "تسريع الخيوط", "ضمان دخول خيط واحد فقط إلى الكتلة في كل مرة", "إنهاء الخيوط", "نسخ الكائن" }, 1, QuizDifficulty.Hard),
+            new("أي بنية بيانات تُستخدم في خوارزمية البحث بالعرض (BFS)؟", new() { "Stack", "Queue", "HashSet", "SortedList" }, 1, QuizDifficulty.Hard),
+            new("ما الفرق بين Dictionary و SortedDictionary؟", new() { "SortedDictionary تحافظ على ترتيب المفاتيح", "Dictionary ترتب المفاتيح تلقائياً", "SortedDictionary لا تقبل مفاتيح", "لا يوجد فرق" }, 0, QuizDifficulty.Hard),
+            new("ما هي دالة التوسعة (Extension Method)؟", new() { "دالة وراثة خاصة بالفئات المجردة", "دالة private داخل الفئة", "دالة تحذف الفئة من الذاكرة", "دالة ثابتة تضيف سلوكاً لنوع موجود دون تعديله، ويكون أول معاملاتها this" }, 3, QuizDifficulty.Hard),
+            new("ما هو النوع record في C#؟", new() { "نوع مرجعي تعتمد مقارنته على القيم (Value-based Equality)", "نوع enum متقدم", "فئة ثابتة static", "واجهة (Interface)" }, 0, QuizDifficulty.Hard),
+            new("ما الفرق بين abstract و virtual على الدوال؟", new() { "لا يوجد فرق", "virtual بدون تنفيذ", "abstract دالة بلا تنفيذ يجب override لها، وvirtual لها تنفيذ افتراضي", "abstract لا يمكن توريثها" }, 2, QuizDifficulty.Hard)
+        };
+
+        return questions;
+    }
+}

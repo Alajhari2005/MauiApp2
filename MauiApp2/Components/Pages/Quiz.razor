@@ -1,0 +1,240 @@
+﻿@page "/quiz"
+@using MauiApp2.Models
+@using Microsoft.Maui.Networking
+@implements IDisposable
+
+<div class="container mt-4" dir="rtl">
+    <h2 class="text-center mb-4">🧠 اختبار لغة C#</h2>
+
+    <!-- التحقق من الاتصال بالإنترنت -->
+    @if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+    {
+        <div class="alert alert-danger text-center">
+            <h4>⚠️ لا يوجد اتصال بالإنترنت!</h4>
+            <p>هذا التطبيق يتطلب اتصالاً بالإنترنت لكي يعمل. يرجى الاتصال والمحاولة مرة أخرى.</p>
+            <button class="btn btn-warning mt-2" @onclick="CheckConnection">تحديث الصفحة</button>
+        </div>
+    }
+    else
+    {
+        <!-- شاشة الإعدادات -->
+        @if (CurrentState == "Menu")
+        {
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">إعدادات الاختبار</h5>
+                    <div class="mb-3">
+                        <label class="form-label">اختر مستوى الصعوبة:</label>
+                        <select class="form-select" @bind="SelectedDifficulty">
+                            <option value="@QuizDifficulty.Easy">سهل</option>
+                            <option value="@QuizDifficulty.Medium">متوسط</option>
+                            <option value="@QuizDifficulty.Hard">صعب</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">عدد الأسئلة (من 10 إلى 50):</label>
+                        <input type="number" class="form-control" @bind="QuestionCount" min="10" max="50" />
+                    </div>
+                    <button class="btn btn-primary w-100" @onclick="StartQuiz">ابدأ الاختبار 🚀</button>
+                </div>
+            </div>
+        }
+        <!-- شاشة الأسئلة -->
+        else if (CurrentState == "Playing" && CurrentQuestion != null)
+        {
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white d-flex justify-content-between">
+                    <span>السؤال @(CurrentQuestionIndex + 1) من @_questions.Count</span>
+                    <span>النتيجة الحالية: @Score</span>
+                </div>
+                <div class="card-body">
+                    <h4 class="mb-4">@CurrentQuestion.QuestionText</h4>
+                    <div class="list-group">
+                        @for (int i = 0; i < CurrentQuestion.Options.Count; i++)
+                        {
+                            int index = i;
+                            <button class="list-group-item mb-2 text-end @(GetAnswerClass(index))" 
+        style="@(IsAnswered ? "cursor: not-allowed;" : "cursor: pointer;")"
+        @onclick="() => SelectAnswer(index)">
+    @ArabicLabels[index] - @CurrentQuestion.Options[index]
+</button>
+                        }
+                    </div>
+                    
+                    @if (IsAnswered)
+                    {
+                        <button class="btn btn-success mt-3 w-100" @onclick="NextQuestion">السؤال التالي ➡️</button>
+                    }
+                </div>
+            </div>
+        }
+        <!-- شاشة النتيجة -->
+        else if (CurrentState == "Finished")
+        {
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h3>🎉 انتهى الاختبار!</h3>
+                    <h1 class="display-4 text-primary my-4">@Score / @(QuestionCount * 10)</h1>
+                    <p class="lead">لقد أجبت على @CorrectAnswersCount من @_questions.Count بشكل صحيح.</p>
+                    <button class="btn btn-primary mt-3" @onclick="ResetGame">إعادة الاختبار 🔄</button>
+                </div>
+            </div>
+
+            <!-- مراجعة الإجابات -->
+            <h4 class="mt-4 mb-3">مراجعة الإجابات:</h4>
+            @foreach (var item in ReviewList)
+            {
+                <div class="card mb-2 border-@(item.IsCorrect ? "success" : "danger")">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Question.QuestionText</h5>
+                        <p class="mb-1 text-success"><strong>الإجابة الصحيحة:</strong> @item.Question.Options[item.Question.CorrectOptionIndex]</p>
+                        @if (!item.IsCorrect)
+                        {
+                            <p class="mb-0 text-danger"><strong>إجابتك كانت:</strong> @item.Question.Options[item.UserAnswerIndex]</p>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+
+@code {
+    // حالة التطبيق: Menu, Playing, Finished
+    private string CurrentState = "Menu";
+    
+    private QuizDifficulty SelectedDifficulty = QuizDifficulty.Easy;
+    private int QuestionCount = 10;
+    
+    private List<QuizQuestion> _questions = new();
+    private int CurrentQuestionIndex = 0;
+    private QuizQuestion? CurrentQuestion => _questions.Count > CurrentQuestionIndex ? _questions[CurrentQuestionIndex] : null;
+    private string[] ArabicLabels = { "أ", "ب", "ج", "د" };
+
+    private int Score = 0;
+    private int CorrectAnswersCount = 0;
+    private bool IsAnswered = false;
+    
+    // لتخزين الإجابات لمراجعتها لاحقاً
+    private int CurrentUserAnswer = -1;
+    private List<ReviewItem> ReviewList = new();
+
+    protected override void OnInitialized()
+    {
+        // الاستماع لتغيرات الشبكة
+        Connectivity.ConnectivityChanged += OnConnectivityChanged;
+    }
+
+    private void OnConnectivityChanged(object? sender, ConnectivityChangedEventArgs e)
+    {
+        // تحديث الواجهة عند تغير حالة الشبكة
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void CheckConnection()
+    {
+        StateHasChanged();
+    }
+
+    private void StartQuiz()
+    {
+        if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) return;
+
+        // جلب الأسئلة بناءً على الصعوبة
+        var allQuestions = QuestionBank.GetAllQuestions()
+            .Where(q => q.Difficulty == SelectedDifficulty)
+            .ToList();
+
+        // خلط الأسئلة واختيار العدد المطلوب
+        var random = new Random();
+        _questions = allQuestions.OrderBy(x => random.Next()).Take(QuestionCount).ToList();
+
+        if (_questions.Count == 0)
+        {
+            // لا توجد أسئلة كافية في هذا المستوى
+            return; 
+        }
+
+        // تصفير المتغيرات
+        CurrentQuestionIndex = 0;
+        Score = 0;
+        CorrectAnswersCount = 0;
+        ReviewList.Clear();
+        IsAnswered = false;
+        
+        CurrentState = "Playing";
+    }
+
+    private void SelectAnswer(int index)
+    {
+        if (IsAnswered || CurrentQuestion == null) return;
+
+        IsAnswered = true;
+        CurrentUserAnswer = index;
+
+        if (index == CurrentQuestion.CorrectOptionIndex)
+        {
+            Score += 10;
+            CorrectAnswersCount++;
+        }
+        
+        // حفظ الإجابة للمراجعة
+        ReviewList.Add(new ReviewItem 
+        { 
+            Question = CurrentQuestion, 
+            UserAnswerIndex = index, 
+            IsCorrect = (index == CurrentQuestion.CorrectOptionIndex) 
+        });
+    }
+
+    private void NextQuestion()
+    {
+        IsAnswered = false;
+        CurrentUserAnswer = -1;
+
+        if (CurrentQuestionIndex < _questions.Count - 1)
+        {
+            CurrentQuestionIndex++;
+        }
+        else
+        {
+            CurrentState = "Finished";
+        }
+    }
+
+    private void ResetGame()
+    {
+        CurrentState = "Menu";
+        _questions.Clear();
+        ReviewList.Clear();
+    }
+
+    // دالة لتلوين الأزرار بعد الإجابة
+    private string GetAnswerClass(int index)
+    {
+        // إذا لم يجب المستخدم بعد، أعد الزر لوضعه الطبيعي
+        if (!IsAnswered) return "list-group-item-action";
+
+        // إذا كان هذا هو الخيار الصحيح -> لون أخضر
+        if (index == CurrentQuestion!.CorrectOptionIndex) return "bg-success text-white border-success";
+
+        // إذا كان هذا هو الخيار الخاطئ الذي اختاره المستخدم -> لون أحمر
+        if (index == CurrentUserAnswer) return "bg-danger text-white border-danger";
+
+        // باقي الخيارات -> لون رمادي باهت
+        return "bg-light text-muted";
+    }
+
+    public void Dispose()
+    {
+        Connectivity.ConnectivityChanged -= OnConnectivityChanged;
+    }
+
+    // فئة مساعدة للمراجعة
+    private class ReviewItem
+    {
+        public QuizQuestion Question { get; set; }
+        public int UserAnswerIndex { get; set; }
+        public bool IsCorrect { get; set; }
+    }
+}
